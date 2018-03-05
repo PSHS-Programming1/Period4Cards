@@ -1,3 +1,4 @@
+
 import random
 
 class Card(object):
@@ -13,10 +14,10 @@ class Card(object):
 
     def __str__(self):
         if self.isFaceUp:
-            output = self.rank + "-" + self.suit
+            output = self.rank + " of " + self.suit
             return output
         else:
-            return "XX"
+            return "X of X"
 
     def flipCard(self):
         if self.isFaceUp:
@@ -65,6 +66,36 @@ class Hand(object):
         """remove all cards from hand"""
         self.cards = []
 
+class Deck(object):
+    '''Creates a deck'''
+
+    def __init__(self):
+        '''creates an empty deck'''
+        self.deck = []
+
+    def __str__(self):
+        card = 0
+        #if len(self.deck) == 0:
+        #    return '<Empty Deck>'
+        output = 'Cards: '
+        for i in Card.SUITS:
+            for j in Card.RANKS:
+                newCard = Card(j,i)
+                self.deck.append(newCard)
+                output += "[" + str(self.deck[card])  + "] "
+                card += 1
+        return output
+
+    def shuffle(self):
+        '''Shuffles the deck'''
+        shuffleDeck = []
+        while len(self.deck) != 0:
+            randomLen = random.randint(0,(len(self.deck) -1))
+            shuffleDeck.append(self.deck[randomLen])
+            self.deck.remove(self.deck[randomLen])
+        self.deck = shuffleDeck
+
+        
 
 h = Hand()
 otherHand = Hand()
@@ -77,9 +108,10 @@ print(otherHand)
 h.clearCards()
 print(h)
 
-
-
-
+deck = Deck()
+print(deck)
+deck.shuffle()
+print(deck)
 
 
 
