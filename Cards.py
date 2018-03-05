@@ -65,22 +65,46 @@ class Hand(object):
         """remove all cards from hand"""
         self.cards = []
 
+class Deck(Hand):
+    """Creates a deck that is a hand"""
+    def __init__(self):
+        super().__init__()
 
-h = Hand()
+    def __str__(self):     #changed the __str__ function so it tells you how many cards the deck has left
+        if len(self.cards) == 0:
+            return "<Empty Deck>"
+        elif len(self.cards) == 1:
+            return "There is 1 card left in the deck"
+        else:
+            return "There are " + str(len(self.cards)) + " cards left in the deck"
+
+    def createDeck(self):
+        for rank in Card.RANKS:
+            for suit in Card.SUITS:
+                deck.addCard(Card(rank, suit))
+
+    def shuffle(self):
+        for i in range(300):
+            shuffledCard = random.choice(self.cards)
+            self.cards.remove(shuffledCard)
+            self.addCard(shuffledCard)
+
+#I changed the testing to test how the deck interacts with the hands
+hand = Hand()
 otherHand = Hand()
-h.addCard(Card("9","D"))
-h.addCard(Card("J","D"))
-print(h)
-h.giveCard(h.getCard("J","C"), otherHand)
-print(h)
-print(otherHand)
-h.clearCards()
-print(h)
-
-
-
-
-
-
-
-
+thirdHand = Hand()
+print("hand:", hand)      #hand is temporary and a name should be passed by parameters to hand later
+print("otherHand:", otherHand)
+print("thirdHand:", thirdHand)
+deck = Deck()
+deck.createDeck()
+deck.shuffle()
+print(deck)
+for i in range(7):
+    deck.giveCard(deck.getCard(deck.cards[0].rank, deck.cards[0].suit), hand)          #deals 7 cards to each hand
+    deck.giveCard(deck.getCard(deck.cards[0].rank, deck.cards[0].suit), otherHand)
+    deck.giveCard(deck.getCard(deck.cards[0].rank, deck.cards[0].suit), thirdHand)
+print("hand:", hand)
+print("otherHand:", otherHand)
+print("thirdHand:",thirdHand)
+print(deck)
